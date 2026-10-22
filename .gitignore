@@ -1,4 +1,4 @@
-﻿node_modules/
+node_modules/
 data/registrations.json
 .DS_Store
 *.log
