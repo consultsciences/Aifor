@@ -23,21 +23,31 @@
         "severity": "high",
         "title": "Comparator is no longer standard of care in the enrolling geographies",
         "detail": "Docetaxel is defensible historically but increasingly replaced by platinum-based rechallenge and ADC-containing regimens in the sites listed. A positive OS result against docetaxel may not support the intended label narrative.",
-        "evidenceIds": ["SYN-101", "SYN-102"]
+        "evidenceIds": [
+          "SYN-101",
+          "SYN-102"
+        ],
+        "cell": "comparator"
       },
       {
         "id": "f2",
         "severity": "medium",
         "title": "OS effect size assumes a larger benefit than the observed Phase 2 tail",
         "detail": "The 4.5-month delta exceeds the upper bound implied by the Phase 2 survival curve once crossover is accounted for. Power falls below 80% if the true delta is 3.0 months.",
-        "evidenceIds": ["SYN-103"]
+        "evidenceIds": [
+          "SYN-103"
+        ],
+        "cell": "power"
       },
       {
         "id": "f3",
         "severity": "medium",
         "title": "Enrolment assumption ignores two competing registrational studies",
         "detail": "Two trials in the same line of therapy are recruiting in the same countries; screen-failure and activation delays are likely under-modelled.",
-        "evidenceIds": ["SYN-104"]
+        "evidenceIds": [
+          "SYN-104"
+        ],
+        "cell": "feasibility"
       }
     ],
     "evidence": [
@@ -107,21 +117,31 @@
         "severity": "high",
         "title": "Functional endpoint has weak regulatory and predictive standing in HFpEF",
         "detail": "6MWD changes have repeatedly failed to track with outcomes in this population. A positive result may not de-risk a Phase 3, and a null result may not kill the asset — the study cannot discriminate.",
-        "evidenceIds": ["SYN-201", "SYN-202"]
+        "evidenceIds": [
+          "SYN-201",
+          "SYN-202"
+        ],
+        "cell": "endpoint"
       },
       {
         "id": "f2",
         "severity": "high",
         "title": "Phenotype heterogeneity dilutes the expected effect",
         "detail": "Mixing obese and non-obese HFpEF without stratification assumes a shared mechanism; prior programmes show effect concentration in one phenotype.",
-        "evidenceIds": ["SYN-203"]
+        "evidenceIds": [
+          "SYN-203"
+        ],
+        "cell": "eligibility"
       },
       {
         "id": "f3",
         "severity": "low",
         "title": "Placebo run-in is absent, so background-therapy changes are uncontrolled",
         "detail": "Diuretic adjustment during the run-in phase is not protocolised, adding variance to the primary endpoint.",
-        "evidenceIds": ["SYN-204"]
+        "evidenceIds": [
+          "SYN-204"
+        ],
+        "cell": "design"
       }
     ],
     "evidence": [
@@ -183,21 +203,31 @@
         "severity": "high",
         "title": "Placebo response in the site mix can swamp the expected effect",
         "detail": "Regions with historically high CDR-SB placebo drift are over-represented. The assumed 0.45-point delta is within the range of site-level placebo variability.",
-        "evidenceIds": ["SYN-301", "SYN-302"]
+        "evidenceIds": [
+          "SYN-301",
+          "SYN-302"
+        ],
+        "cell": "design"
       },
       {
         "id": "f2",
         "severity": "medium",
         "title": "No tau enrichment reduces the expected treatment effect",
         "detail": "Amyloid confirmation alone admits a population where target engagement is unlikely to translate; tau-PET or plasma p-tau enrichment would raise the prior.",
-        "evidenceIds": ["SYN-303"]
+        "evidenceIds": [
+          "SYN-303"
+        ],
+        "cell": "eligibility"
       },
       {
         "id": "f3",
         "severity": "medium",
         "title": "18-month duration is at the short end for CDR-SB separation",
         "detail": "Separation in comparable programmes emerged between 18 and 24 months; the study may read out before the effect stabilises.",
-        "evidenceIds": ["SYN-304"]
+        "evidenceIds": [
+          "SYN-304"
+        ],
+        "cell": "endpoint"
       }
     ],
     "evidence": [
@@ -259,21 +289,31 @@
         "severity": "high",
         "title": "Historical control is not exchangeable with the enrolled population",
         "detail": "The historical cohort was younger and less proteinuric; slope comparisons will be confounded by baseline progression rate.",
-        "evidenceIds": ["SYN-401", "SYN-402"]
+        "evidenceIds": [
+          "SYN-401",
+          "SYN-402"
+        ],
+        "cell": "comparator"
       },
       {
         "id": "f2",
         "severity": "medium",
         "title": "12-month slope is noisy at this sample size",
         "detail": "With 60 participants split across doses, the confidence interval on slope difference will likely span clinically distinct scenarios.",
-        "evidenceIds": ["SYN-403"]
+        "evidenceIds": [
+          "SYN-403"
+        ],
+        "cell": "power"
       },
       {
         "id": "f3",
         "severity": "low",
         "title": "Unequal dose allocation weakens the dose-response read",
         "detail": "A 2:1 allocation with an open-label design limits interpretation of the low-dose arm.",
-        "evidenceIds": ["SYN-404"]
+        "evidenceIds": [
+          "SYN-404"
+        ],
+        "cell": "design"
       }
     ],
     "evidence": [
@@ -335,21 +375,31 @@
         "severity": "medium",
         "title": "Non-inferiority margin is wider than the historical effect of the comparator",
         "detail": "A 10% margin exceeds the conservative fraction of the vedolizumab effect, so a positive result may not establish a clinically meaningful benefit.",
-        "evidenceIds": ["SYN-501", "SYN-502"]
+        "evidenceIds": [
+          "SYN-501",
+          "SYN-502"
+        ],
+        "cell": "regulatory"
       },
       {
         "id": "f2",
         "severity": "medium",
         "title": "Screen failure and prior biologic exposure will slow enrolment",
         "detail": "The anti-TNF-refractory population is heavily recruited and protocol exclusions are broad; the enrolment curve assumes 1.4 patients per site-month.",
-        "evidenceIds": ["SYN-503"]
+        "evidenceIds": [
+          "SYN-503"
+        ],
+        "cell": "feasibility"
       },
       {
         "id": "f3",
         "severity": "low",
         "title": "Steroid tapering rules interact with the remission definition",
         "detail": "The primary endpoint requires steroid-free remission; tapering failures will be counted as non-remitters and may bias against the experimental arm if tapering is faster there.",
-        "evidenceIds": ["SYN-504"]
+        "evidenceIds": [
+          "SYN-504"
+        ],
+        "cell": "endpoint"
       }
     ],
     "evidence": [
@@ -411,21 +461,31 @@
         "severity": "high",
         "title": "Histological endpoint has high reader variability at this effect size",
         "detail": "Inter-reader agreement on one-stage fibrosis change is modest; the expected 12% absolute difference is close to the noise floor.",
-        "evidenceIds": ["SYN-601", "SYN-602"]
+        "evidenceIds": [
+          "SYN-601",
+          "SYN-602"
+        ],
+        "cell": "endpoint"
       },
       {
         "id": "f2",
         "severity": "high",
         "title": "Class-level failures reduce the prior for this mechanism",
         "detail": "Several programmes targeting the same pathway failed on fibrosis endpoints despite metabolic improvement.",
-        "evidenceIds": ["SYN-603"]
+        "evidenceIds": [
+          "SYN-603"
+        ],
+        "cell": "evidence"
       },
       {
         "id": "f3",
         "severity": "medium",
         "title": "Biopsy requirement narrows enrolment and selects advanced patients",
         "detail": "Requiring a biopsy within 6 months excludes patients and may skew the population toward faster progressors.",
-        "evidenceIds": ["SYN-604"]
+        "evidenceIds": [
+          "SYN-604"
+        ],
+        "cell": "eligibility"
       }
     ],
     "evidence": [

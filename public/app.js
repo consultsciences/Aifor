@@ -463,6 +463,139 @@ async function renderLedger() {
   `;
 }
 
+/* ---------------- divergence map ---------------- */
+
+async function renderDivergence() {
+  const d = await api('/api/divergence');
+
+  const statusChipCls = (s) => (s === 'split' || s === 'lone' ? 'warn' : s === 'unanimous' ? 'good' : 'partial');
+
+  // Open on the programme with the most contested cells (the product's highlight).
+  const pick = [...d.programs].sort(
+    (a, b) =>
+      b.cells.flatMap((c) => c.flags).filter((f) => f.status === 'split' || f.status === 'lone').length -
+      a.cells.flatMap((c) => c.flags).filter((f) => f.status === 'split' || f.status === 'lone').length,
+  )[0]?.id;
+
+  app.innerHTML = `
+    <div class="page-head">
+      <div>
+        <h1>Divergence map</h1>
+        <p class="muted">Which models raise which design issue, per rubric cell. Where models converge the critique
+        is solid; where they split, the design is contestable — and that split is the deliverable.</p>
+      </div>
+      <span class="chip">${d.modelCount} models × ${d.cells.length} cells · fixture</span>
+    </div>
+
+    <section class="stats-row" aria-label="Divergence summary">
+      <div class="stat"><span class="value">${d.modelCount}</span><span class="label">Panel models</span></div>
+      <div class="stat"><span class="value">${d.totals.flags}</span><span class="label">Flags raised</span></div>
+      <div class="stat"><span class="value">${d.totals.unanimous}</span><span class="label">Unanimous</span></div>
+      <div class="stat"><span class="value">${d.totals.contested}</span><span class="label">Split or lone</span></div>
+    </section>
+
+    <div class="legend" aria-label="Legend">
+      <span><i class="heat-chip h-unanimous">6/6</i> unanimous</span>
+      <span><i class="heat-chip h-mostly">4–5/6</i> mostly agree</span>
+      <span><i class="heat-chip h-split">2–3/6</i> split — contestable</span>
+      <span><i class="heat-chip h-lone">1/6</i> lone call</span>
+      <span><i class="heat-chip h-clean">—</i> no issue in cell</span>
+      <span class="muted">Click a row for the per-model split.</span>
+    </div>
+
+    <div class="table-wrap">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>Programme</th>
+            ${d.cells.map((c) => `<th class="num">${esc(c.label)}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody id="mrows">
+          ${d.programs
+            .map(
+              (p) => `
+          <tr class="clickable" data-pid="${esc(p.id)}">
+            <td><a class="row-link" href="#/program/${encodeURIComponent(p.id)}">${esc(p.title)}</a>
+                <div class="muted small">${esc(p.area)} · ${esc(p.phase)}</div></td>
+            ${p.cells
+              .map((c) => {
+                const f = c.flags[0];
+                if (!f) return `<td class="num"><span class="heat-chip h-clean">—</span></td>`;
+                return `<td class="num"><span class="heat-chip h-${esc(f.status)}" title="${esc(f.title)}">${f.raised.length}/${d.modelCount}</span></td>`;
+              })
+              .join('')}
+          </tr>`,
+            )
+            .join('')}
+        </tbody>
+      </table>
+    </div>
+
+    <div id="detail"></div>
+
+    <div class="callout">
+      <strong>How this is produced.</strong> Fixture attribution: every design flag is voted on by all six panel
+      models with a deterministic seeded draw weighted by flag severity — a one-for-one stand-in for real model
+      calls, swapped when the panel is wired. No outcome predictions: disagreement about a design is not a
+      forecast of trial success.
+    </div>
+  `;
+
+  const detail = document.getElementById('detail');
+  const rows = document.getElementById('mrows');
+
+  function show(pid) {
+    const prog = d.programs.find((x) => x.id === pid);
+    if (!prog) return;
+    for (const tr of rows.querySelectorAll('tr')) tr.classList.toggle('sel', tr.dataset.pid === pid);
+    const flaggedCells = prog.cells.filter((c) => c.flags.length);
+    const contested = prog.cells.flatMap((c) => c.flags).filter((f) => f.status === 'split' || f.status === 'lone').length;
+    detail.innerHTML = `
+      <section class="panel" id="div-detail">
+        <div class="panel-title">
+          <h2>${esc(prog.title)}</h2>
+          <span class="small muted">${contested} contested of ${prog.stats.flags} flags · <a href="#/program/${encodeURIComponent(prog.id)}">open dossier</a></span>
+        </div>
+        ${
+          flaggedCells.length
+            ? flaggedCells
+                .map((c) =>
+                  c.flags
+                    .map(
+                      (f) => `
+            <article class="finding sev-${esc(f.severity)}">
+              <h3>${esc(c.label)} — ${esc(f.title)}
+                <span class="chip sev-${esc(f.severity)}">${esc(f.severity)}</span>
+                <span class="chip ${statusChipCls(f.status)}">${f.raised.length}/${d.modelCount} ${esc(f.status)}</span>
+              </h3>
+              <p>${esc(f.detail)}</p>
+              <p class="refs models">
+                <span class="muted">Raised by:</span>
+                ${f.raised.map((m) => `<span class="chip good">${esc(m.name)}</span>`).join(' ')}
+                <span class="muted" style="margin-left:0.7rem">Not raised:</span>
+                ${f.notRaised.map((m) => `<span class="chip ghost">${esc(m.name)}</span>`).join(' ')}
+              </p>
+              <p class="refs">Evidence: ${f.evidenceIds.map((e) => esc(e)).join(', ') || '—'}</p>
+            </article>`,
+                    )
+                    .join(''),
+                )
+                .join('')
+            : `<p class="muted">No issues raised in any rubric cell for this programme.</p>`
+        }
+      </section>`;
+  }
+
+  rows.addEventListener('click', (e) => {
+    if (e.target.closest('a')) return;
+    const tr = e.target.closest('tr[data-pid]');
+    if (tr) show(tr.dataset.pid);
+  });
+
+  if (pick) show(pick);
+}
+
 /* ---------------- method ---------------- */
 
 function renderMethod() {
@@ -549,6 +682,7 @@ async function route() {
     if (hash === '/' || hash === '') return await renderRegistry();
     if (hash.startsWith('/program/')) return await renderProgram(decodeURIComponent(hash.slice('/program/'.length)));
     if (hash === '/calibration') return await renderCalibration();
+    if (hash === '/divergence') return await renderDivergence();
     if (hash === '/ledger') return await renderLedger();
     if (hash === '/method') return renderMethod();
     app.innerHTML = `<div class="panel"><h1>Not found</h1><p><a href="#/">Back to registry</a></p></div>`;

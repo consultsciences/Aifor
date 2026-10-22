@@ -201,6 +201,99 @@ function calibration() {
   return { overall, rows, buckets, total: ledger.length };
 }
 
+/* ---------------- divergence (arena view) ---------------- */
+
+const RUBRIC_CELLS = [
+  { id: 'design', label: 'Design' },
+  { id: 'endpoint', label: 'Endpoint' },
+  { id: 'power', label: 'Power / N' },
+  { id: 'eligibility', label: 'Eligibility' },
+  { id: 'comparator', label: 'Comparator' },
+  { id: 'feasibility', label: 'Feasibility' },
+  { id: 'regulatory', label: 'Regulatory' },
+  { id: 'evidence', label: 'Evidence' },
+];
+
+// Fixture stand-in for per-model critique: probability a model raises the flag,
+// weighted by severity. Deterministic per (programme, flag, model). Replace with
+// real model calls when the panel is wired.
+const RAISE_P = { high: 0.78, medium: 0.5, low: 0.32 };
+
+function flagStatus(share) {
+  if (share >= 0.999) return 'unanimous';
+  if (share >= 0.66) return 'mostly';
+  if (share >= 0.33) return 'split';
+  return 'lone';
+}
+
+function divergence() {
+  const models = panel.models;
+  const programsOut = programs.map((program) => {
+    let flags = 0;
+    let unanimous = 0;
+    let contested = 0;
+    const cells = RUBRIC_CELLS.map((cdef) => {
+      const cellFlags = (program.designFlags || [])
+        .filter((f) => f.cell === cdef.id)
+        .map((f) => {
+          const p = RAISE_P[f.severity] ?? 0.5;
+          const draws = models.map((m) => ({
+            id: m.id,
+            name: m.name,
+            r: mulberry32(hashSeed(`${program.id}|${f.id}|${m.id}`))(),
+          }));
+          let raised = draws.filter((d) => d.r < p);
+          let notRaised = draws.filter((d) => d.r >= p);
+          // A fixture flag nobody raises would read as broken; promote the most likely model.
+          if (!raised.length && notRaised.length) {
+            notRaised.sort((a, b) => a.r - b.r);
+            raised = [notRaised.shift()];
+          }
+          const share = raised.length / models.length;
+          const status = flagStatus(share);
+          flags += 1;
+          if (status === 'unanimous') unanimous += 1;
+          if (status === 'split' || status === 'lone') contested += 1;
+          return {
+            id: f.id,
+            severity: f.severity,
+            title: f.title,
+            detail: f.detail,
+            evidenceIds: f.evidenceIds || [],
+            raised: raised.map((d) => ({ id: d.id, name: d.name })),
+            notRaised: notRaised.map((d) => ({ id: d.id, name: d.name })),
+            share: Number(share.toFixed(3)),
+            status,
+          };
+        });
+      return { cell: cdef.id, label: cdef.label, flags: cellFlags };
+    });
+    return {
+      id: program.id,
+      title: program.title,
+      area: program.area,
+      phase: program.phase,
+      cells,
+      stats: { flags, unanimous, contested },
+    };
+  });
+  const totals = programsOut.reduce(
+    (acc, p) => ({
+      flags: acc.flags + p.stats.flags,
+      unanimous: acc.unanimous + p.stats.unanimous,
+      contested: acc.contested + p.stats.contested,
+    }),
+    { flags: 0, unanimous: 0, contested: 0 },
+  );
+  return {
+    cells: RUBRIC_CELLS,
+    modelCount: models.length,
+    models: models.map((m) => ({ id: m.id, name: m.name })),
+    programs: programsOut,
+    totals,
+  };
+}
+
 async function readBody(req) {
   let size = 0;
   const chunks = [];
@@ -305,6 +398,10 @@ const server = http.createServer(async (req, res) => {
 
     if (url.pathname === '/api/calibration' && req.method === 'GET') {
       return send(res, 200, calibration());
+    }
+
+    if (url.pathname === '/api/divergence' && req.method === 'GET') {
+      return send(res, 200, divergence());
     }
 
     if (req.method === 'GET') return serveStatic(res, url.pathname);

@@ -410,6 +410,53 @@ tr.clickable:focus-within { background: var(--accent-soft); }
   font-size: 0.9rem;
 }
 
+/* divergence matrix */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 1.1rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin: 0 0 0.9rem;
+}
+.legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+.heat-chip {
+  display: inline-block;
+  min-width: 3rem;
+  text-align: center;
+  font-style: normal;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+  border: 1px solid var(--line-strong);
+  background: #fff;
+  color: var(--muted);
+}
+.heat-chip.h-unanimous {
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border-color: #bcd8cc;
+  font-weight: 650;
+}
+.heat-chip.h-mostly { color: var(--amber); background: var(--amber-soft); border-color: #e7d7b6; }
+.heat-chip.h-split {
+  color: var(--warn);
+  background: var(--warn-soft);
+  border-color: #eccbba;
+  font-weight: 650;
+}
+.heat-chip.h-lone { color: #5a4a8a; background: #efecf8; border-color: #d3cbe8; }
+.heat-chip.h-clean { border-style: dashed; color: #a9a294; background: transparent; }
+
+.matrix th, .matrix td { text-align: center; }
+.matrix th:first-child, .matrix td:first-child { text-align: left; min-width: 17rem; }
+.matrix tbody tr.sel td { background: var(--accent-soft); }
+.matrix .heat-chip { cursor: default; }
+.models .chip { margin-right: 0.15rem; }
+
 .prose { max-width: 72ch; }
 .prose h2 { margin-top: 2rem; }
 .prose ul { padding-left: 1.1rem; }
