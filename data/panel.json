@@ -1,0 +1,72 @@
+{
+  "models": [
+    { "id": "qwen3-max", "name": "Qwen3-Max", "vendor": "Alibaba" },
+    { "id": "glm-5", "name": "GLM-5", "vendor": "Zhipu" },
+    { "id": "deepseek-v3.2", "name": "DeepSeek-V3.2", "vendor": "DeepSeek" },
+    { "id": "gpt-5-mini", "name": "GPT-5 mini", "vendor": "OpenAI" },
+    { "id": "claude-haiku-4.5", "name": "Claude Haiku 4.5", "vendor": "Anthropic" },
+    { "id": "kimi-k2.5", "name": "Kimi K2.5", "vendor": "Moonshot" }
+  ],
+  "personas": [
+    {
+      "id": "skeptic",
+      "name": "Skeptic",
+      "lens": "Base rates and failure modes",
+      "bias": -0.06,
+      "templates": [
+        "The reference class sits near {base}% and this design does not clearly escape it. Primary endpoint is {endpoint}, and the protocol's power assumptions rely on an effect at the optimistic edge. I land at {pct}%, weighted down for the mismatch between the claimed effect and what comparable programmes achieved ({cited}).",
+        "Nothing in this protocol changes the prior for {indication}. The endpoint is {endpoint}, n is {n}, and the design keeps the usual failure modes. {pct}% is where I land, and most of the residual optimism depends on execution rather than mechanism ({cited})."
+      ]
+    },
+    {
+      "id": "statistician",
+      "name": "Statistician",
+      "lens": "Power, estimands, multiplicity",
+      "bias": -0.04,
+      "templates": [
+        "With n={n} and {endpoint} as the estimand, the detectable effect is larger than the effect the protocol claims to expect. That asymmetry, not the biology, drives my {pct}% versus a {base}% reference class. The variance assumptions in {cited} look optimistic.",
+        "The analysis plan is internally consistent but the margin and variance choices favour a positive read. Under a more defensible variance assumption the power drops below the stated target. I put this at {pct}% ({cited})."
+      ]
+    },
+    {
+      "id": "clinician",
+      "name": "Clinician",
+      "lens": "Practice relevance and population fit",
+      "bias": 0.02,
+      "templates": [
+        "In practice the eligible population for {indication} is narrower than the protocol implies, which usually helps effect size and hurts enrolment. {endpoint} is clinically meaningful here, so I am above the {base}% reference class at {pct}%, but the comparator choice remains a weakness ({cited}).",
+        "The clinical question is real and the endpoint is the one clinicians would ask about. My concern is whether the enrolled population matches the one that benefits. At {pct}% I am close to the {base}% reference class, with the difference coming from population fit ({cited})."
+      ]
+    },
+    {
+      "id": "regulator",
+      "name": "Regulator",
+      "lens": "Endpoint acceptance and precedent",
+      "bias": -0.03,
+      "templates": [
+        "From an acceptance standpoint, {endpoint} has precedent but only with supportive secondary evidence. The design does not guarantee that support. I score {pct}% against a {base}% reference class, and the gap is about label risk rather than biology ({cited}).",
+        "The endpoint is acceptable in principle. The comparator and the analysis population are where a review would focus. I land at {pct}%, slightly under the {base}% reference class, because the supporting evidence package is thin ({cited})."
+      ]
+    },
+    {
+      "id": "operator",
+      "name": "Operator",
+      "lens": "Enrolment, sites, supply, timelines",
+      "bias": -0.01,
+      "templates": [
+        "The protocol assumes an enrolment rate that comparable studies in {indication} did not achieve. If the readout slips, the effect estimate gets noisier and the {base}% reference class stops being the right anchor. {pct}% reflects execution risk more than mechanism ({cited}).",
+        "Site mix and eligibility will determine whether this reads out on time. My number, {pct}%, is the {base}% reference class adjusted for the recruitment assumptions in the protocol, which look optimistic ({cited})."
+      ]
+    },
+    {
+      "id": "diligence",
+      "name": "Diligence lead",
+      "lens": "Value inflection and downside",
+      "bias": 0.03,
+      "templates": [
+        "The value question is whether a positive read changes the asset's position, not just the probability. At {pct}% versus a {base}% reference class, the asymmetry is acceptable only if the design fixes the comparator problem. {endpoint} supports a label story if the effect is real ({cited}).",
+        "I am slightly above the {base}% reference class at {pct}% because the downside is bounded by the design's optionality. That said, the protocol's weakest link is the one that determines the headline: {endpoint} ({cited})."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,466 @@
+[
+  {
+    "id": "hx-101-nsclc",
+    "title": "HX-101 vs docetaxel in 2L EGFR-mutant NSCLC",
+    "sponsor": "Helix Oncology (fixture)",
+    "area": "Oncology",
+    "phase": "Phase 3",
+    "indication": "EGFR-mutant NSCLC, second line after osimertinib",
+    "endpoint": "Overall survival",
+    "comparator": "Docetaxel monotherapy",
+    "n": 520,
+    "durationMonths": 30,
+    "readoutWindow": "2027 H1",
+    "baseRate": {
+      "value": 0.52,
+      "class": "Phase 3 oncology, OS primary, post-3G TKI",
+      "source": "Synthetic reference class (fixture)"
+    },
+    "summary": "Randomised open-label study in a post-osimertinib population. OS primary with a 4.5-month improvement target; enrolment assumes 18% annual attrition from competing trials.",
+    "designFlags": [
+      {
+        "id": "f1",
+        "severity": "high",
+        "title": "Comparator is no longer standard of care in the enrolling geographies",
+        "detail": "Docetaxel is defensible historically but increasingly replaced by platinum-based rechallenge and ADC-containing regimens in the sites listed. A positive OS result against docetaxel may not support the intended label narrative.",
+        "evidenceIds": ["SYN-101", "SYN-102"]
+      },
+      {
+        "id": "f2",
+        "severity": "medium",
+        "title": "OS effect size assumes a larger benefit than the observed Phase 2 tail",
+        "detail": "The 4.5-month delta exceeds the upper bound implied by the Phase 2 survival curve once crossover is accounted for. Power falls below 80% if the true delta is 3.0 months.",
+        "evidenceIds": ["SYN-103"]
+      },
+      {
+        "id": "f3",
+        "severity": "medium",
+        "title": "Enrolment assumption ignores two competing registrational studies",
+        "detail": "Two trials in the same line of therapy are recruiting in the same countries; screen-failure and activation delays are likely under-modelled.",
+        "evidenceIds": ["SYN-104"]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "SYN-101",
+        "claim": "Guideline-concordant second-line therapy after third-generation TKI failure is heterogeneous and increasingly ADC-based.",
+        "source": "Fixture guideline synthesis 001",
+        "span": "Post-TKI progression is managed with platinum rechallenge, ADC monotherapy, or trial enrolment; docetaxel is a residual option.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-102",
+        "claim": "Historic docetaxel control arms overstate the incremental benefit of new agents.",
+        "source": "Fixture meta-analysis 014",
+        "span": "Control-arm performance in post-TKI NSCLC has improved over the last decade, compressing apparent treatment effects.",
+        "status": "partial",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-103",
+        "claim": "Phase 2 tail estimates for this asset imply a 2.6–3.4 month OS delta, not 4.5.",
+        "source": "Fixture Phase 2 reanalysis 022",
+        "span": "Restricted mean survival difference at 24 months was 2.9 months (95% CI 1.4–4.4).",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-104",
+        "claim": "Two registrational trials compete for the same second-line population in the same countries.",
+        "source": "Fixture registry scan 031",
+        "span": "Both studies list overlapping sites and identical eligibility in the post-osimertinib setting.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-105",
+        "claim": "Crossover to subsequent therapy dilutes OS effects in open-label designs.",
+        "source": "Fixture methods review 008",
+        "span": "Post-progression therapy differed between arms in 41% of assessed studies, attenuating OS estimates.",
+        "status": "partial",
+        "synthetic": true
+      }
+    ]
+  },
+  {
+    "id": "nw-77-hfpef",
+    "title": "NW-77 in HFpEF with exercise limitation",
+    "sponsor": "Northwind Cardio (fixture)",
+    "area": "Cardiology",
+    "phase": "Phase 2b",
+    "indication": "HFpEF, NYHA II–III",
+    "endpoint": "6-minute walk distance at 24 weeks",
+    "comparator": "Placebo on standard therapy",
+    "n": 180,
+    "durationMonths": 18,
+    "readoutWindow": "2026 H2",
+    "baseRate": {
+      "value": 0.34,
+      "class": "Phase 2b cardiovascular, functional primary endpoint",
+      "source": "Synthetic reference class (fixture)"
+    },
+    "summary": "Dose-ranging study with a functional primary endpoint. Includes a diuretic-stable subgroup and a broad eligibility window that admits both obese and non-obese phenotypes.",
+    "designFlags": [
+      {
+        "id": "f1",
+        "severity": "high",
+        "title": "Functional endpoint has weak regulatory and predictive standing in HFpEF",
+        "detail": "6MWD changes have repeatedly failed to track with outcomes in this population. A positive result may not de-risk a Phase 3, and a null result may not kill the asset — the study cannot discriminate.",
+        "evidenceIds": ["SYN-201", "SYN-202"]
+      },
+      {
+        "id": "f2",
+        "severity": "high",
+        "title": "Phenotype heterogeneity dilutes the expected effect",
+        "detail": "Mixing obese and non-obese HFpEF without stratification assumes a shared mechanism; prior programmes show effect concentration in one phenotype.",
+        "evidenceIds": ["SYN-203"]
+      },
+      {
+        "id": "f3",
+        "severity": "low",
+        "title": "Placebo run-in is absent, so background-therapy changes are uncontrolled",
+        "detail": "Diuretic adjustment during the run-in phase is not protocolised, adding variance to the primary endpoint.",
+        "evidenceIds": ["SYN-204"]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "SYN-201",
+        "claim": "6MWD improvements have not reliably predicted outcome benefit in HFpEF.",
+        "source": "Fixture endpoint review 007",
+        "span": "Across assessed trials, 6MWD change explained little of the variance in subsequent CV death or hospitalisation effects.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-202",
+        "claim": "Regulators have accepted functional endpoints only with supportive outcome trends.",
+        "source": "Fixture regulatory precedent 019",
+        "span": "Functional primary endpoints were accepted where secondary outcome measures moved in the same direction.",
+        "status": "partial",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-203",
+        "claim": "Obese and non-obese HFpEF differ in treatment response.",
+        "source": "Fixture phenotype analysis 012",
+        "span": "Treatment effects were concentrated in the obese phenotype in two of three assessed programmes.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-204",
+        "claim": "Unprotocolised diuretic changes add measurable variance to exercise endpoints.",
+        "source": "Fixture operational review 004",
+        "span": "Sites reporting ad-lib diuretic titration showed wider 6MWD variance than protocolised sites.",
+        "status": "partial",
+        "synthetic": true
+      }
+    ]
+  },
+  {
+    "id": "an-4-ad",
+    "title": "AN-4 in early Alzheimer's disease",
+    "sponsor": "Arbor Neuro (fixture)",
+    "area": "Neurology",
+    "phase": "Phase 3",
+    "indication": "Early AD, amyloid-confirmed, MMSE 22–28",
+    "endpoint": "CDR-SB change at 18 months",
+    "comparator": "Placebo",
+    "n": 900,
+    "durationMonths": 42,
+    "readoutWindow": "2028 H2",
+    "baseRate": {
+      "value": 0.41,
+      "class": "Phase 3 CNS, cognitive composite primary",
+      "source": "Synthetic reference class (fixture)"
+    },
+    "summary": "Two-arm study with 18-month cognitive primary. Site mix includes high-placebo-response regions; no enrichment for tau status.",
+    "designFlags": [
+      {
+        "id": "f1",
+        "severity": "high",
+        "title": "Placebo response in the site mix can swamp the expected effect",
+        "detail": "Regions with historically high CDR-SB placebo drift are over-represented. The assumed 0.45-point delta is within the range of site-level placebo variability.",
+        "evidenceIds": ["SYN-301", "SYN-302"]
+      },
+      {
+        "id": "f2",
+        "severity": "medium",
+        "title": "No tau enrichment reduces the expected treatment effect",
+        "detail": "Amyloid confirmation alone admits a population where target engagement is unlikely to translate; tau-PET or plasma p-tau enrichment would raise the prior.",
+        "evidenceIds": ["SYN-303"]
+      },
+      {
+        "id": "f3",
+        "severity": "medium",
+        "title": "18-month duration is at the short end for CDR-SB separation",
+        "detail": "Separation in comparable programmes emerged between 18 and 24 months; the study may read out before the effect stabilises.",
+        "evidenceIds": ["SYN-304"]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "SYN-301",
+        "claim": "Placebo CDR-SB drift varies materially by region and site experience.",
+        "source": "Fixture site analysis 003",
+        "span": "Adjusted placebo change ranged from 0.2 to 0.9 points across regions in pooled early-AD studies.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-302",
+        "claim": "Trials with higher placebo drift show smaller measured treatment effects.",
+        "source": "Fixture meta-regression 011",
+        "span": "Each 0.3-point increase in placebo change was associated with a 0.18-point reduction in estimated effect.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-303",
+        "claim": "Tau status enriches for cognitive progression and treatment response.",
+        "source": "Fixture biomarker review 016",
+        "span": "Progression rates were approximately doubled in tau-positive participants versus amyloid-only selection.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-304",
+        "claim": "CDR-SB separation in comparable programmes emerges later than 18 months.",
+        "source": "Fixture programme comparison 021",
+        "span": "In two assessed programmes, curves separated after month 18 and continued to diverge to month 24.",
+        "status": "partial",
+        "synthetic": true
+      }
+    ]
+  },
+  {
+    "id": "mr-9-fabry",
+    "title": "MR-9 in Fabry disease nephropathy",
+    "sponsor": "Meridian Rare (fixture)",
+    "area": "Rare disease",
+    "phase": "Phase 2",
+    "indication": "Fabry disease with proteinuric nephropathy",
+    "endpoint": "Annualised eGFR slope over 12 months",
+    "comparator": "Open-label standard of care",
+    "n": 60,
+    "durationMonths": 20,
+    "readoutWindow": "2027 H1",
+    "baseRate": {
+      "value": 0.58,
+      "class": "Phase 2 rare disease, slope endpoint, single arm",
+      "source": "Synthetic reference class (fixture)"
+    },
+    "summary": "Single-arm study using historical control for eGFR slope. Enrolment is limited by genotype and treatment status; two dose levels with unequal allocation.",
+    "designFlags": [
+      {
+        "id": "f1",
+        "severity": "high",
+        "title": "Historical control is not exchangeable with the enrolled population",
+        "detail": "The historical cohort was younger and less proteinuric; slope comparisons will be confounded by baseline progression rate.",
+        "evidenceIds": ["SYN-401", "SYN-402"]
+      },
+      {
+        "id": "f2",
+        "severity": "medium",
+        "title": "12-month slope is noisy at this sample size",
+        "detail": "With 60 participants split across doses, the confidence interval on slope difference will likely span clinically distinct scenarios.",
+        "evidenceIds": ["SYN-403"]
+      },
+      {
+        "id": "f3",
+        "severity": "low",
+        "title": "Unequal dose allocation weakens the dose-response read",
+        "detail": "A 2:1 allocation with an open-label design limits interpretation of the low-dose arm.",
+        "evidenceIds": ["SYN-404"]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "SYN-401",
+        "claim": "Historical Fabry cohorts differ systematically from contemporarily enrolled patients.",
+        "source": "Fixture natural-history review 005",
+        "span": "Historical controls were younger and had lower baseline proteinuria than recently enrolled cohorts.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-402",
+        "claim": "Baseline proteinuria predicts eGFR slope and confounds external comparisons.",
+        "source": "Fixture prognostic model 009",
+        "span": "Baseline UPCR explained a substantial share of slope variance in untreated cohorts.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-403",
+        "claim": "Twelve-month eGFR slope has wide uncertainty at n<100.",
+        "source": "Fixture simulation 017",
+        "span": "Simulated 95% intervals spanned both benefit and harm at the planned sample size.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-404",
+        "claim": "Open-label unequal allocation biases patient-reported and clinician-assessed endpoints.",
+        "source": "Fixture design review 013",
+        "span": "Open-label allocation was associated with differential concomitant therapy changes.",
+        "status": "not_found",
+        "synthetic": true
+      }
+    ]
+  },
+  {
+    "id": "cb-2-uc",
+    "title": "CB-2 vs vedolizumab in moderate-to-severe UC",
+    "sponsor": "Cobalt Immunology (fixture)",
+    "area": "Immunology",
+    "phase": "Phase 3",
+    "indication": "Ulcerative colitis, inadequate response to anti-TNF",
+    "endpoint": "Clinical remission at week 52",
+    "comparator": "Vedolizumab",
+    "n": 640,
+    "durationMonths": 28,
+    "readoutWindow": "2027 H2",
+    "baseRate": {
+      "value": 0.61,
+      "class": "Phase 3 immunology, active comparator, remission endpoint",
+      "source": "Synthetic reference class (fixture)"
+    },
+    "summary": "Head-to-head non-inferiority design against vedolizumab with a 10% margin. Central reading is used for endoscopy; corticosteroid tapering is protocolised.",
+    "designFlags": [
+      {
+        "id": "f1",
+        "severity": "medium",
+        "title": "Non-inferiority margin is wider than the historical effect of the comparator",
+        "detail": "A 10% margin exceeds the conservative fraction of the vedolizumab effect, so a positive result may not establish a clinically meaningful benefit.",
+        "evidenceIds": ["SYN-501", "SYN-502"]
+      },
+      {
+        "id": "f2",
+        "severity": "medium",
+        "title": "Screen failure and prior biologic exposure will slow enrolment",
+        "detail": "The anti-TNF-refractory population is heavily recruited and protocol exclusions are broad; the enrolment curve assumes 1.4 patients per site-month.",
+        "evidenceIds": ["SYN-503"]
+      },
+      {
+        "id": "f3",
+        "severity": "low",
+        "title": "Steroid tapering rules interact with the remission definition",
+        "detail": "The primary endpoint requires steroid-free remission; tapering failures will be counted as non-remitters and may bias against the experimental arm if tapering is faster there.",
+        "evidenceIds": ["SYN-504"]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "SYN-501",
+        "claim": "Non-inferiority margins should preserve at least half the comparator's established effect.",
+        "source": "Fixture regulatory methods 006",
+        "span": "Guidance favours margins that preserve a substantial fraction of the reference effect, with justification.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-502",
+        "claim": "A 10% margin exceeds half the historical vedolizumab remission effect.",
+        "source": "Fixture effect-size review 018",
+        "span": "Placebo-adjusted week-52 remission differences clustered below 20 percentage points.",
+        "status": "partial",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-503",
+        "claim": "Anti-TNF-refractory UC populations are saturated with competing trials.",
+        "source": "Fixture recruitment analysis 023",
+        "span": "Median site-month enrolment in comparable studies was below the assumed rate.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-504",
+        "claim": "Steroid-free remission definitions penalise arms with faster tapering schedules.",
+        "source": "Fixture endpoint sensitivity 010",
+        "span": "Faster taper schedules produced more tapering failures without differences in endoscopic improvement.",
+        "status": "partial",
+        "synthetic": true
+      }
+    ]
+  },
+  {
+    "id": "sb-5-mash",
+    "title": "SB-5 in MASH with F2–F3 fibrosis",
+    "sponsor": "Sable Metabolic (fixture)",
+    "area": "Metabolic",
+    "phase": "Phase 2",
+    "indication": "MASH, F2–F3 fibrosis, biopsy-confirmed",
+    "endpoint": "Fibrosis improvement ≥1 stage without worsening of MASH",
+    "comparator": "Placebo",
+    "n": 240,
+    "durationMonths": 24,
+    "readoutWindow": "2027 H2",
+    "baseRate": {
+      "value": 0.29,
+      "class": "Phase 2 metabolic, histological endpoint",
+      "source": "Synthetic reference class (fixture)"
+    },
+    "summary": "Biopsy-based histological endpoint with central reading. Eligibility requires a recent biopsy; two readers adjudicate discordance.",
+    "designFlags": [
+      {
+        "id": "f1",
+        "severity": "high",
+        "title": "Histological endpoint has high reader variability at this effect size",
+        "detail": "Inter-reader agreement on one-stage fibrosis change is modest; the expected 12% absolute difference is close to the noise floor.",
+        "evidenceIds": ["SYN-601", "SYN-602"]
+      },
+      {
+        "id": "f2",
+        "severity": "high",
+        "title": "Class-level failures reduce the prior for this mechanism",
+        "detail": "Several programmes targeting the same pathway failed on fibrosis endpoints despite metabolic improvement.",
+        "evidenceIds": ["SYN-603"]
+      },
+      {
+        "id": "f3",
+        "severity": "medium",
+        "title": "Biopsy requirement narrows enrolment and selects advanced patients",
+        "detail": "Requiring a biopsy within 6 months excludes patients and may skew the population toward faster progressors.",
+        "evidenceIds": ["SYN-604"]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "SYN-601",
+        "claim": "One-stage fibrosis change has limited inter-reader reproducibility.",
+        "source": "Fixture pathology review 002",
+        "span": "Agreement on stage change was moderate, with discordance concentrated at stage boundaries.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-602",
+        "claim": "Small absolute differences are indistinguishable from reader noise without adjudication.",
+        "source": "Fixture measurement error 015",
+        "span": "Adjudicated reads reduced but did not eliminate misclassification at a 12% effect size.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-603",
+        "claim": "Metabolic improvement has not reliably translated into fibrosis benefit in this class.",
+        "source": "Fixture class review 020",
+        "span": "Several programmes improved steatohepatitis scores without meeting fibrosis endpoints.",
+        "status": "supported",
+        "synthetic": true
+      },
+      {
+        "id": "SYN-604",
+        "claim": "Biopsy-based eligibility selects more advanced and faster-progressing patients.",
+        "source": "Fixture cohort analysis 024",
+        "span": "Biopsy-confirmed cohorts showed higher progression rates than imaging-selected cohorts.",
+        "status": "partial",
+        "synthetic": true
+      }
+    ]
+  }
+]
