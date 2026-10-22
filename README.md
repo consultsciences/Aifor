@@ -15,6 +15,24 @@ PORT=4400 node server.mjs  # different port
 
 No dependencies, no build step, no network calls. Node 18+ (ESM, top-level await).
 
+## Dokploy / Hostinger deployment (PostgreSQL)
+
+The default `server.mjs` is fixture-only (no database). For Hostinger VPS + Dokploy with PostgreSQL,
+use `server.pg.mjs` (drop-in, same API surface) and see `dokploy/README.md` for the full checklist.
+
+- **`Dockerfile`** — multi-stage Node 22-alpine build, non-root, health check on `/api/meta`.
+- **`docker-compose.yml`** — app + postgres:16-alpine, named volume, health checks.
+- **`migrate.mjs`** — one-shot `node migrate.mjs` with `DATABASE_URL` set to load fixtures into PostgreSQL.
+- **`env.example`** — copy and fill in Dokploy-provided credentials.
+
+```bash
+# local smoke test (fixtures fallback, no database)
+node server.pg.mjs
+# with PostgreSQL
+DATABASE_URL=postgresql://... node migrate.mjs
+DATABASE_URL=postgresql://... node server.pg.mjs
+```
+
 Regenerate the synthetic resolved-forecast ledger:
 
 ```bash

@@ -1,0 +1,45 @@
+version: '3.9'
+name: clinical-dojo
+
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-4319}:4319"
+    environment:
+      NODE_ENV: production
+      PORT: 4319
+      HOST: 0.0.0.0
+      DATABASE_URL: "postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@postgres:5432/${DB_NAME:-clinical}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    # Health check so Dokploy restarts on failure
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('node:http').get('http://localhost:4319/api/meta', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-clinical}
+    ports:
+      # Not exposed externally by default; Dokploy can expose if needed
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

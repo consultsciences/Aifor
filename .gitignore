@@ -2,3 +2,5 @@
 data/registrations.json
 .DS_Store
 *.log
+
+.npm-cache/
