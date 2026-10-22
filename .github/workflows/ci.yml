@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'design/**', 'fix/**']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Unit + API tests
+        run: npm test
+      - name: Fixture server boots and serves a dossier
+        run: |
+          PORT=4399 node server.mjs &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4399/api/health > /dev/null; then break; fi
+            sleep 0.5
+          done
+          curl -fsS http://127.0.0.1:4399/api/programs/hx-101-nsclc > /tmp/dossier.json
+          curl -fsS http://127.0.0.1:4399/api/divergence > /tmp/divergence.json
+          node -e "const d=require('/tmp/dossier.json'); if(!d.projection||!d.analysts.length) process.exit(1); const v=require('/tmp/divergence.json'); if(v.cells.length!==8) process.exit(1)"
+          kill %1
+
+  design:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Lint DESIGN.md against the spec
+        run: npx -y @google/design.md lint DESIGN.md --format json | tee lint.json
+      - name: Fail on any error or warning
+        run: node -e "const r=require('./lint.json'); const s=r.summary||{}; if (s.errors||s.warnings) { console.error('design lint:', s); process.exit(1); }"
