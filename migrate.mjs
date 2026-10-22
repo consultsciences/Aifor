@@ -17,9 +17,9 @@ import { databaseUrlFromEnv } from './src/config.mjs';
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const DATA = path.join(ROOT, 'data');
 
-const url = process.env.DATABASE_URL;
+const url = databaseUrlFromEnv(process.env);
 if (!url) {
-  console.error('DATABASE_URL is not set. Example: postgresql://user:pass@host:5432/clinical');
+  console.error('no database configured: set DATABASE_URL, or DB_HOST/DB_USER/DB_PASSWORD/DB_NAME');
   process.exit(2);
 }
 
