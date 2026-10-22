@@ -1,0 +1,13 @@
+.git
+.gitignore
+node_modules
+npm-debug.log*
+tests
+shots
+docs
+tailwind.theme.json
+tokens.json
+data/registrations.json
+**/.DS_Store
+*.log
+.npm-cache
