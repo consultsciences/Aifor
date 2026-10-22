@@ -1,8 +1,7 @@
 # Clinical R&D Forecasting Environment — prototype
 
-Evidence-first design review for clinical programmes. Built as the Phase 3 surface from
-`../clinical_transformation_plan.md`: registry → dossier → panel projection → pre-registration →
-calibration.
+Evidence-first design review for clinical programmes. Built as the Phase 3 surface described in
+[`docs/PLAN.md`](docs/PLAN.md): registry → dossier → panel projection → pre-registration → calibration.
 
 **Prototype on synthetic fixtures.** Research use only. Not medical, regulatory or investment advice.
 No patient-level data. Every fixture record is labelled `fixture`/`synthetic`.
