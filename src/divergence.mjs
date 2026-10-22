@@ -19,6 +19,16 @@ export const RUBRIC_CELLS = [
 
 export const RAISE_P = { high: 0.78, medium: 0.5, low: 0.32 };
 
+// Fixture flag ids are only unique inside a programme (f1, f2, f3), so the
+// database keys them as <program>:<flag>. The app works with the short form: the
+// divergence attribution is a seeded draw on the flag id, and it must not change
+// depending on which store answered the request.
+export function flagIdFromKey(key) {
+  const s = String(key ?? '');
+  const i = s.indexOf(':');
+  return i === -1 ? s : s.slice(i + 1);
+}
+
 export function flagStatus(share) {
   if (share <= 0) return 'none';
   if (share >= 0.999) return 'unanimous';

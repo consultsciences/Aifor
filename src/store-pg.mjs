@@ -8,6 +8,8 @@
 
 
 
+import { flagIdFromKey } from './divergence.mjs';
+
 const toIso = (v) => (v instanceof Date ? v.toISOString() : v);
 
 const rowToRegistration = (row) => ({
@@ -68,7 +70,9 @@ export async function createPgStore({ connectionString, pool: injected }) {
       for (const f of flags.rows) {
         if (!flagsBy.has(f.program_id)) flagsBy.set(f.program_id, []);
         flagsBy.get(f.program_id).push({
-          id: f.id,
+          // stored key is <program>:<flag>; the app uses the short id so the
+          // seeded attribution matches fixture mode exactly
+          id: flagIdFromKey(f.id),
           cell: f.cell || null,
           severity: f.severity,
           title: f.title,

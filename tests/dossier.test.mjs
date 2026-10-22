@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { buildDossier, buildProjection } from '../src/dossier.mjs';
-import { divergence, flagStatus } from '../src/divergence.mjs';
+import { divergence, flagStatus, flagIdFromKey } from '../src/divergence.mjs';
 
 const readJson = async (f) => JSON.parse(await readFile(new URL(`../data/${f}`, import.meta.url), 'utf8'));
 const programs = await readJson('programs.json');
@@ -104,4 +104,10 @@ test('a flag nobody raises stays at zero instead of being promoted', () => {
   }
   assert.ok(zeros.length > 0, 'expected at least one 0/6 flag across 400 programmes');
   for (const f of zeros) assert.equal(f.raised.length, 0);
+});
+
+test('flag ids are unqualified consistently across stores', () => {
+  assert.equal(flagIdFromKey('hx-101-nsclc:f1'), 'f1');
+  assert.equal(flagIdFromKey('f1'), 'f1');
+  assert.equal(flagIdFromKey(null), '');
 });
