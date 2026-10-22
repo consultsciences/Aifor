@@ -13,7 +13,8 @@ it, so an existing service stays valid.
 2. **Create the app service** (App → Create App):
    - Source `git@github.com:consultsciences/Aifor`, branch `main`, root directory `.`, build = Dockerfile.
    - Port mapping `4319:4319`.
-   - Environment: `DATABASE_URL`, `NODE_ENV=production`, `HOST=0.0.0.0`, `DATA_DIR=/app/data`.
+   - Environment: `DATABASE_URL` (or `DB_HOST`/`DB_USER`/`DB_PASSWORD`/`DB_NAME`), `NODE_ENV=production`,
+     `HOST=0.0.0.0`, `DATA_DIR=/app/data`.
    - Health check path `/api/health` (checks the store; `/api/meta` only checks the process).
 
 3. **Persistence**: PostgreSQL keeps the ledger in `pgdata`. Fixture-mode `data/registrations.json` is

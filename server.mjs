@@ -1,7 +1,7 @@
 // Entry point: pick a store, then listen.
 //
-// DATABASE_URL present → PostgreSQL, and a database that will not answer is a
-// boot failure (the prototype logged a warning and served fixtures on a live
+// DATABASE_URL — or DB_HOST/DB_USER/DB_PASSWORD/DB_NAME — present → PostgreSQL,
+// and a database that will not answer is a boot failure (the prototype logged a warning and served fixtures on a live
 // URL instead). Set ALLOW_FIXTURE_FALLBACK=1 to opt back into that behaviour for
 // a throwaway demo, and /api/meta will keep reporting mode=fixture.
 
@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { createApp } from './src/app.mjs';
 import { createFixtureStore } from './src/store-fixture.mjs';
 import { createPgStore } from './src/store-pg.mjs';
+import { databaseUrlFromEnv } from './src/config.mjs';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 4319);
@@ -19,7 +20,7 @@ const PUBLIC_DIR = path.join(ROOT, 'public');
 
 async function main() {
   let store;
-  const databaseUrl = process.env.DATABASE_URL;
+  const databaseUrl = databaseUrlFromEnv(process.env);
 
   if (databaseUrl) {
     try {

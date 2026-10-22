@@ -33,8 +33,11 @@ DATABASE_URL=postgresql://… node migrate.mjs     # once, before first use
 DATABASE_URL=postgresql://… node server.mjs
 ```
 
-If `DATABASE_URL` is set and the database will not answer, the process **exits** rather than serving
-fixtures on a live URL (`ALLOW_FIXTURE_FALLBACK=1` re-enables the old behaviour for a throwaway demo).
+A database is configured either by `DATABASE_URL` or by the discrete
+`DB_HOST`/`DB_PORT`/`DB_USER`/`DB_PASSWORD`/`DB_NAME` parts, which the app assembles into a connection
+string (password percent-encoded). If one is configured and the database will not answer, the process
+**exits** rather than serving fixtures on a live URL (`ALLOW_FIXTURE_FALLBACK=1` re-enables the old
+behaviour for a throwaway demo).
 `/api/meta` reports `mode: "database" | "fixture"`, and the UI banner reads it.
 
 See [`dokploy/README.md`](dokploy/README.md) for the step-by-step.
