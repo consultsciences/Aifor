@@ -144,7 +144,8 @@ export function createApp({ store, publicDir = path.resolve('public'), log = con
       return send(res, 200, divergence([...programs.values()], panel));
     }
 
-    if (req.method === 'GET') return serveStatic(res, pathname, publicDir);
+    // HEAD is served like GET (Node drops the body); uptime checks use it.
+    if (req.method === 'GET' || req.method === 'HEAD') return serveStatic(res, pathname, publicDir);
     throw new HttpError(405, 'method not allowed');
   };
 

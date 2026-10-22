@@ -160,6 +160,12 @@ test('methods other than GET are rejected on read routes', async () => {
   assert.equal(res.status, 405);
 });
 
+test('HEAD on a static route is answered like GET', async () => {
+  const res = await fetch(`${base}/`, { method: 'HEAD' });
+  assert.equal(res.status, 200);
+  assert.match(res.headers.get('content-type') || '', /text\/html/);
+});
+
 test('static files are served with a CSP and traversal is blocked', async () => {
   const index = await fetch(`${base}/`);
   assert.equal(index.status, 200);
