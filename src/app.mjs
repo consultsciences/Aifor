@@ -10,6 +10,7 @@ import { divergence } from './divergence.mjs';
 import { calibration } from './scoring.mjs';
 import { forecastHash, registrationId, verifyRegistration } from './canonical.mjs';
 import { createContactHandler } from './contact.mjs';
+import { sakireaConfig, sakireaSources, sakireaWorkflows, sakireaSearch, sakireaRunWorkflow } from './sakirea.mjs';
 
 const DISCLAIMER =
   'Prototype on synthetic fixtures. Research use only. Not medical, regulatory or investment advice. No patient-level data.';
@@ -157,6 +158,47 @@ export function createApp({
       if (req.method !== 'GET') throw new HttpError(405, 'method not allowed');
       const [programs, panel] = await Promise.all([store.listPrograms(), store.getPanel()]);
       return send(res, 200, divergence([...programs.values()], panel));
+    }
+
+    // ---- Sakirea research proxy (optional; fails closed, see src/sakirea.mjs) ----
+    // Five routes mirror the canonical integration contract. The app works fully
+    // without a running sakirea: every route answers 503 { error: { code, message } }
+    // with code sakirea_disabled / sakirea_unavailable until one is configured.
+    if (pathname === '/api/research/config') {
+      if (req.method !== 'GET') throw new HttpError(405, 'method not allowed');
+      return send(res, 200, { ok: true, ...sakireaConfig() });
+    }
+
+    if (pathname === '/api/research/sources') {
+      if (req.method !== 'GET') throw new HttpError(405, 'method not allowed');
+      const r = await sakireaSources();
+      if (!r.ok) return send(res, r.status, { error: r.error });
+      return send(res, 200, { ok: true, sources: r.data.sources });
+    }
+
+    if (pathname === '/api/research/workflows') {
+      if (req.method !== 'GET') throw new HttpError(405, 'method not allowed');
+      const r = await sakireaWorkflows();
+      if (!r.ok) return send(res, r.status, { error: r.error });
+      return send(res, 200, { ok: true, workflows: r.data.workflows });
+    }
+
+    if (pathname === '/api/research/search') {
+      if (req.method !== 'POST') throw new HttpError(405, 'method not allowed');
+      const body = await readJsonBody(req);
+      const r = await sakireaSearch(body);
+      if (!r.ok) return send(res, r.status, { error: r.error });
+      return send(res, 200, { ok: true, ...r.data });
+    }
+
+    const researchRun = pathname.match(/^\/api\/research\/workflows\/([A-Za-z0-9_-]+)\/run$/);
+    if (researchRun) {
+      if (req.method !== 'POST') throw new HttpError(405, 'method not allowed');
+      const body = await readJsonBody(req);
+      // outputDir comes from config only — never from the request body.
+      const r = await sakireaRunWorkflow(researchRun[1], { topic: body.topic, mode: body.mode });
+      if (!r.ok) return send(res, r.status, { error: r.error });
+      return send(res, 200, { ok: true, ...r.data });
     }
 
     // Contact form intake. Plain HTML form post, so it works with the strict CSP.
