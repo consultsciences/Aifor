@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact — Clinical R&amp;D Forecasting Environment</title>
+    <meta name="description" content="Contact form for the Clinical R&D Forecasting Environment and data-protection requests." />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#161616" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23ffffff'/%3E%3Crect x='2' y='2' width='5' height='5' fill='%230f62fe'/%3E%3Crect x='9' y='2' width='5' height='5' fill='%23161616'/%3E%3Crect x='2' y='9' width='5' height='5' fill='%23161616'/%3E%3Crect x='9' y='9' width='5' height='5' fill='%23e0e0e0'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/legal.css" />
+  </head>
+  <body>
+    <main class="legal-wrap">
+      <a class="legal-back" href="/">&larr; Back to the forecasting environment</a>
+
+      <h1>Contact</h1>
+      <p class="meta">Research enquiries, corrections, data-protection requests</p>
+
+      <p>
+        Send a message below and it reaches the monitored inbox for this service. If your enquiry
+        is about personal data — access, correction, erasure, or a complaint — say so in the
+        message and we will answer within one month.
+      </p>
+
+      <div class="notice" id="sent" hidden>
+        <strong>Thank you — your message has been recorded.</strong> We reply from the monitored
+        inbox for this service.
+      </div>
+
+      <form class="contact" method="post" action="/api/contact">
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" maxlength="120" autocomplete="name" required />
+
+        <label for="email">Email address</label>
+        <input id="email" name="email" type="email" maxlength="200" autocomplete="email" required />
+
+        <label for="subject">Subject</label>
+        <input id="subject" name="subject" type="text" maxlength="160" />
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" maxlength="4000" required></textarea>
+
+        <!-- Honeypot: hidden from people, filled by naive bots. Handled server-side. -->
+        <div class="hp" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <button type="submit">Send message</button>
+      </form>
+
+      <p class="form-note">
+        We use your message only to answer you. See the <a href="/privacy">Privacy Notice</a> for
+        what is processed and for how long. Please do not send patient data, confidential
+        programme information, or personal data about anyone else.
+      </p>
+
+      <p class="small muted">
+        Consult Sciences Ltd · company number 17155547 ·
+        <a href="/terms">Terms of Use</a> · <a href="/privacy">Privacy Notice</a>
+      </p>
+    </main>
+    <script type="module" src="/contact.js"></script>
+  </body>
+</html>
