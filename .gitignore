@@ -4,3 +4,6 @@ data/registrations.json
 *.log
 
 .npm-cache/
+
+# Sakirea workflow artifacts (written on the sakirea host)
+outputs/
