@@ -48,6 +48,9 @@ const clip = (v, n) => String(v ?? '').trim().slice(0, n);
 // interfere with each other).
 export function createContactHandler({
   dataDir,
+  // Where messages are spooled. A named volume in production: DATA_DIR lives inside
+  // the container image, so a redeploy would otherwise take the spool with it.
+  spoolDir = process.env.CONTACT_SPOOL_DIR || dataDir,
   trustProxy = false,
   maxPerWindow = 3,
   log = console,
@@ -97,8 +100,8 @@ export function createContactHandler({
     ip, // kept with the message: it is the only abuse signal for a spool with no mail relay
   };
 
-  await mkdir(dataDir, { recursive: true });
-  await appendFile(path.join(dataDir, 'contact-messages.jsonl'), `${JSON.stringify(record)}\n`, 'utf8');
+  await mkdir(spoolDir, { recursive: true });
+  await appendFile(path.join(spoolDir, 'contact-messages.jsonl'), `${JSON.stringify(record)}\n`, 'utf8');
   log.log?.(`[contact] message stored (${message.length} chars) from ${email}`);
 
   return redirectToSent(res);

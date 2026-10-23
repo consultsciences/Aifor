@@ -31,7 +31,13 @@ export function createApp({
   contactMaxPerHour = 3,
   log = console,
 }) {
-  const handleContact = createContactHandler({ dataDir, trustProxy, maxPerWindow: contactMaxPerHour, log });
+  const handleContact = createContactHandler({
+    dataDir,
+    spoolDir: process.env.CONTACT_SPOOL_DIR || dataDir,
+    trustProxy,
+    maxPerWindow: contactMaxPerHour,
+    log,
+  });
   const route = async (req, res, url) => {
     const { pathname } = url;
 
