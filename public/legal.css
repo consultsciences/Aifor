@@ -1,0 +1,38 @@
+:root { --ink:#161616; --muted:#525252; --line:#e0e0e0; --accent:#0f62fe; --bg:#ffffff; --soft:#f4f4f4; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--ink);
+  font: 400 16px/1.6 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif; }
+.legal-wrap { max-width: 78ch; margin: 0 auto; padding: 48px 24px 72px; }
+.legal-back { display:inline-block; margin-bottom:32px; color:var(--accent); text-decoration:none; font-size:14px; }
+.legal-back:hover { text-decoration:underline; }
+h1 { font-weight:300; font-size:36px; line-height:1.2; margin:0 0 8px; letter-spacing:-0.01em; }
+h2 { font-weight:600; font-size:19px; margin:36px 0 8px; }
+h3 { font-weight:600; font-size:16px; margin:24px 0 6px; }
+p, li { color:var(--ink); }
+.meta { color:var(--muted); font-size:14px; margin:0 0 28px; }
+.muted { color:var(--muted); }
+.small { font-size:14px; }
+hr { border:0; border-top:1px solid var(--line); margin:32px 0; }
+code { font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:14px; background:var(--soft); padding:1px 5px; }
+a { color:var(--accent); }
+.box { border:1px solid var(--line); border-left:3px solid var(--accent); padding:16px 18px; margin:24px 0; background:var(--soft); }
+table { border-collapse:collapse; width:100%; margin:16px 0; font-size:15px; }
+th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+th { font-weight:600; }
+
+/* contact form */
+form.contact { margin:28px 0 0; max-width:560px; }
+form.contact label { display:block; font-size:14px; font-weight:600; margin:18px 0 6px; }
+form.contact input, form.contact textarea {
+  width:100%; padding:10px 12px; border:1px solid var(--line); background:#fff; color:var(--ink);
+  font:inherit; font-size:15px; border-radius:0; }
+form.contact textarea { min-height:160px; resize:vertical; }
+form.contact input:focus, form.contact textarea:focus { outline:2px solid var(--accent); outline-offset:-1px; border-color:var(--accent); }
+form.contact button {
+  margin-top:20px; padding:12px 22px; border:1px solid var(--accent); background:var(--accent); color:#fff;
+  font:inherit; font-weight:600; cursor:pointer; border-radius:0; }
+form.contact button:hover { background:#0043ce; border-color:#0043ce; }
+form.contact .hp { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+.form-note { font-size:14px; color:var(--muted); margin-top:16px; }
+.tight { margin:0; }
+.notice { border-left:3px solid var(--accent); background:var(--soft); padding:12px 16px; margin:20px 0; font-size:15px; }
