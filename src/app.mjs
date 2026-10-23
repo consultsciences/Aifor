@@ -9,6 +9,7 @@ import { buildDossier } from './dossier.mjs';
 import { divergence } from './divergence.mjs';
 import { calibration } from './scoring.mjs';
 import { forecastHash, registrationId, verifyRegistration } from './canonical.mjs';
+import { createContactHandler } from './contact.mjs';
 
 const DISCLAIMER =
   'Prototype on synthetic fixtures. Research use only. Not medical, regulatory or investment advice. No patient-level data.';
@@ -22,7 +23,21 @@ function intParam(value, fallback, { min = 1, max = 500 } = {}) {
   return Math.min(max, Math.max(min, n));
 }
 
-export function createApp({ store, publicDir = path.resolve('public'), log = console }) {
+export function createApp({
+  store,
+  publicDir = path.resolve('public'),
+  dataDir = process.env.DATA_DIR || path.resolve('data'),
+  trustProxy = process.env.TRUST_PROXY === '1',
+  contactMaxPerHour = 3,
+  log = console,
+}) {
+  const handleContact = createContactHandler({
+    dataDir,
+    spoolDir: process.env.CONTACT_SPOOL_DIR || dataDir,
+    trustProxy,
+    maxPerWindow: contactMaxPerHour,
+    log,
+  });
   const route = async (req, res, url) => {
     const { pathname } = url;
 
@@ -142,6 +157,19 @@ export function createApp({ store, publicDir = path.resolve('public'), log = con
       if (req.method !== 'GET') throw new HttpError(405, 'method not allowed');
       const [programs, panel] = await Promise.all([store.listPrograms(), store.getPanel()]);
       return send(res, 200, divergence([...programs.values()], panel));
+    }
+
+    // Contact form intake. Plain HTML form post, so it works with the strict CSP.
+    if (pathname === '/api/contact') {
+      return handleContact(req, res, { dataDir, trustProxy, log });
+    }
+
+    // Legal pages. The terms, privacy notice and contact form are required on every
+    // estate site, and they are static files rather than part of the SPA.
+    if (pathname === '/privacy' || pathname === '/terms' || pathname === '/contact') {
+      if (req.method !== 'GET' && req.method !== 'HEAD') throw new HttpError(405, 'method not allowed');
+      const page = pathname === '/privacy' ? 'privacy.html' : pathname === '/terms' ? 'terms.html' : 'contact.html';
+      return serveStatic(res, `/legal/${page}`, publicDir);
     }
 
     // HEAD is served like GET (Node drops the body); uptime checks use it.
